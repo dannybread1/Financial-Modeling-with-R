@@ -5,4 +5,3 @@
 
 rm(list = ls()) #Clears the environment.
 cat("\014") #Clears console
-   
