@@ -69,7 +69,7 @@ vegaBsmovm <- function(s, x, vol, r, q, dtm){
   ttm <- dtm/365
   d1 <- (log(s/x)+(r-q+(vol^2)/2)*ttm)/(vol*sqrt(ttm))
   
-  vega <- s*dnorm(d1)*sqrt(ttm)
+  vega <- .01*s*dnorm(d1)*sqrt(ttm)
   
   return(vega)
 }
@@ -94,12 +94,17 @@ thetaBsmovm <- function(s, x, vol, r, q, dtm, ind){
   d1 <- (log(s/x)+(r-q+(vol^2)/2)*ttm)/(vol*sqrt(ttm))
   d2 <- d1-vol*sqrt(ttm)
   
-  theta <- 1/dtm*(-(s*vol*exp(-q*ttm)*dnorm(d1)/(2*sqrt(ttm)))-r*x*exp(-r*ttm)*pnorm(ind*d2)+ind*q*s*exp(-q*ttm)*pnorm(ind*d1))
+  # theta <- 1/dtm*(-(s*vol*exp(-q*ttm)*dnorm(d1)/(2*sqrt(ttm)))-r*x*exp(-r*ttm)*pnorm(ind*d2)+ind*q*s*exp(-q*ttm)*pnorm(ind*d1))
+  theta <- 1/365*(-(s*vol*exp(-q*ttm)*dnorm(d1)/(2*sqrt(ttm)))-r*x*exp(-r*ttm)*pnorm(ind*d2)+ind*q*s*exp(-q*ttm)*pnorm(ind*d1))
   
   return(theta)
 }
 
-volImpliedBsmovm <- function(){
+volImpliedBsmovm <- function(s, x, vol, r, q, dtm, ind, o){
   # Volatility implied by a given option price (other values also given)
+  # Requires initial guess for vol
   
+  IV <- fxnGoalSeek(args = c(s, x, vol, r, q, dtm, ind), val = 3, fxn = priceBsmovm, goal = o, precision = 0.001)
+  
+  return(IV)
 }
