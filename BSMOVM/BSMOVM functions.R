@@ -94,7 +94,6 @@ thetaBsmovm <- function(s, x, vol, r, q, dtm, ind){
   d1 <- (log(s/x)+(r-q+(vol^2)/2)*ttm)/(vol*sqrt(ttm))
   d2 <- d1-vol*sqrt(ttm)
   
-  # theta <- 1/dtm*(-(s*vol*exp(-q*ttm)*dnorm(d1)/(2*sqrt(ttm)))-r*x*exp(-r*ttm)*pnorm(ind*d2)+ind*q*s*exp(-q*ttm)*pnorm(ind*d1))
   theta <- 1/365*(-(s*vol*exp(-q*ttm)*dnorm(d1)/(2*sqrt(ttm)))-r*x*exp(-r*ttm)*pnorm(ind*d2)+ind*q*s*exp(-q*ttm)*pnorm(ind*d1))
   
   return(theta)

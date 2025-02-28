@@ -38,6 +38,9 @@ fxnGoalSeek <- function(args, val, fxn, goal, precision = 0.001){
   # Function to goal-seek a particular numerical value by changing 1 variable in a function.
   # I'm sure there's a much better way to do this, but I'll worry about that later.
   
+  # This doesn't work for an initial input of 0
+  if (args[val] == 0) {args[val] <- 1}
+  
   y <- do.call(what = fxn, args = as.list(args))
   args_up <- args
   args_down <- args
