@@ -68,3 +68,9 @@ parityRate <- function(s, x, c, p, q, t){
   return(r)
 }
 
+parityRateRoi <- function(s, x, c, p){
+  # non-annualized rate, 0 dividends
+  r <- log((p + s - c)/x)*-1
+  return(r)
+}
+

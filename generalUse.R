@@ -3,8 +3,8 @@
 
 # General use Functions
 
-rm(list = ls()) #Clears the environment.
-cat("\014") #Clears console
+# rm(list = ls()) #Clears the environment.
+# cat("\014") #Clears console
 
 # Function to calculate 1st order sensitivity 
 calcSensitivity1 <- function(args, val, fxn, inc = 0.001){
