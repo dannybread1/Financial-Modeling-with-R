@@ -27,13 +27,18 @@ fxnSmallOptionChain <- function(symbol){
   return(dfO)
 }
 
-xMark <- '^VIX'
+xMark <- '^SPX'
 
 dfS <- fxnSmallOptionChain(symbol = xMark)
 
+# Calculating the rates; mind the bid and ask
+dfS$rate_borrow <- parityRate(s = qmodPrice(symbol = xMark), x = dfS$Strike, c = dfS$Ask_call, p = dfS$Bid_put, q = 0
+                              , t = (as.numeric(as.Date(dfS$Expiration) - Sys.Date())+1)/365)
 
-dfS$rate <- parityRate(s = qmodPrice(symbol = xMark), x = dfS$Strike, c = dfS$midpoint_call, p = dfS$midpoint_put, q = 0
-                       , t = (as.numeric(as.Date(dfS$Expiration) - Sys.Date()) + 1)/365)
+dfS$rate_lend <- parityRate(s = qmodPrice(symbol = xMark), x = dfS$Strike, c = dfS$Bid_call, p = dfS$Ask_put, q = 0
+                              , t = (as.numeric(as.Date(dfS$Expiration) - Sys.Date())+1)/365)
 
+# ROI; not time discounted
+dfS$roi_borrow <- parityRateRoi(s = qmodPrice(symbol = xMark), x = dfS$Strike, c = dfS$Ask_call, p = dfS$Bid_put)
+dfS$roi_lend <-   parityRateRoi(s = qmodPrice(symbol = xMark), x = dfS$Strike, c = dfS$Bid_call, p = dfS$Ask_put)
 
-dfS$rateRoi <- parityRateRoi(s = qmodPrice(symbol = xMark), x = dfS$Strike, c = dfS$midpoint_call, p = dfS$midpoint_put)
